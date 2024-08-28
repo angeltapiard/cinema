@@ -1,0 +1,97 @@
+﻿@model Cinema.Models.Pelicula
+@using Cinema.Models
+
+@{
+    var clasificaciones = Enum.GetValues(typeof(Clasificacion)).Cast<Clasificacion>().ToList();
+    var clasificacionSeleccionada = Model.Clasificacion;  // Usamos el tipo de enumeración directamente
+}
+
+<div class="container mt-3">
+    <h3 class="mb-4">Editar Película</h3>
+    <form asp-action="Editar" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <input type="hidden" asp-for="Id" />
+
+        <!-- Campo para el nombre -->
+        <div class="mb-3">
+            <label asp-for="Nombre" class="form-label">Nombre</label>
+            <input asp-for="Nombre" class="form-control" required />
+            <div class="invalid-feedback">
+                Por favor, ingrese el nombre de la película.
+            </div>
+        </div>
+
+        <!-- Campo para la duración -->
+        <div class="mb-3">
+            <label asp-for="Duracion" class="form-label">Duración (minutos)</label>
+            <input asp-for="Duracion" class="form-control" required />
+            <div class="invalid-feedback">
+                Por favor, ingrese la duración de la película.
+            </div>
+        </div>
+
+        <!-- Campo para la clasificación -->
+        <div class="mb-3">
+            <label asp-for="Clasificacion" class="form-label">Clasificación</label>
+            <select asp-for="Clasificacion" class="form-select" required>
+                <option value="">Selecciona una clasificación</option>
+                @Html.Raw(string.Join("\n", clasificaciones.Select(c => $@"<option value='{c}' {(c == clasificacionSeleccionada ? "selected" : "")}>{c}</option>")))
+            </select>
+            <div class="invalid-feedback">
+                Por favor, seleccione una clasificación de la lista.
+            </div>
+        </div>
+
+        <!-- Campo para la descripción -->
+        <div class="mb-3">
+            <label asp-for="Descripcion" class="form-label">Descripción</label>
+            <textarea asp-for="Descripcion" class="form-control" rows="5" required></textarea>
+            <div class="invalid-feedback">
+                Por favor, ingrese la descripción de la película.
+            </div>
+        </div>
+
+        <!-- Campo para el póster -->
+        <div class="mb-3">
+            <label class="form-label">Póster Actual</label>
+            @if (Model.Poster != null && Model.Poster.Length > 0)
+            {
+                <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Poster)" alt="Póster" class="img-thumbnail" style="max-width: 150px;" />
+            }
+            else
+            {
+                <div class="d-flex justify-content-center align-items-center h-100 bg-light" style="max-width: 150px;">
+                    <p class="text-muted">No hay póster disponible.</p>
+                </div>
+            }
+            <input type="file" name="posterFile" class="form-control" />
+            <div class="invalid-feedback">
+                Por favor, suba el póster de la película si desea actualizarlo.
+            </div>
+        </div>
+
+        <!-- Botón para guardar los cambios -->
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Guardar
+        </button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        // Bootstrap validation script
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+}

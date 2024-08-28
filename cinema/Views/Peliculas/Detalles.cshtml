@@ -1,0 +1,39 @@
+﻿@model Cinema.Models.Pelicula
+
+<h3>Detalles de @Model.Nombre</h3>
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="row g-0">
+            <!-- Columna para el póster -->
+            <div class="col-md-4">
+                @if (Model.Poster != null && Model.Poster.Length > 0)
+                {
+                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Poster)" alt="Póster de @Model.Nombre" class="img-fluid rounded-start" />
+                }
+                else
+                {
+                    <div class="d-flex justify-content-center align-items-center h-100 bg-light">
+                        <p class="text-muted">No hay póster disponible.</p>
+                    </div>
+                }
+            </div>
+
+            <!-- Columna para los detalles -->
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h1 class="card-title">@Model.Nombre</h1>
+                    <p class="card-text"><strong>Duración:</strong> @Model.Duracion minutos</p>
+                    <p class="card-text"><strong>Clasificación:</strong> @Model.Clasificacion</p>
+                    <p class="card-text"><strong>Descripción:</strong> @Model.Descripcion</p>
+                </div>
+            </div>
+        </div>
+        <!-- Botón para volver a la lista -->
+        <div class="card-footer text-end">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle me-2"></i>Volver a la lista
+            </a>
+        </div>
+    </div>
+</div>

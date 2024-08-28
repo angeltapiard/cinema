@@ -20,3 +20,21 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+
+.color {
+    background-color: #FADC78;
+}
+
+h1 {
+    padding: 10px;
+    color: #655448;
+}
+
+.custom-navbar {
+    background-color: #F5F9FF; 
+}
+
+
+

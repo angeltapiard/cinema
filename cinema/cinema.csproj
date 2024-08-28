@@ -6,4 +6,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.8" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
+    <PackageReference Include="Microsoft.Data.SqlClient.SNI.runtime" Version="5.2.0" />
+    <PackageReference Include="Microsoft.SqlServer.Server" Version="1.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\NewFolder\" />
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+
 </Project>
