@@ -1,0 +1,80 @@
+﻿@model Cinema.Models.Menu
+@using Cinema.Models
+
+<div class="container mt-3">
+    <h3 class="mb-4">Crear Menú</h3>
+    <form asp-action="Crear" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <!-- Campo para el artículo -->
+        <div class="mb-3">
+            <label asp-for="Articulo" class="form-label">Artículo</label>
+            <input asp-for="Articulo" class="form-control" required />
+            <div class="invalid-feedback">
+                Por favor, ingrese el nombre del artículo.
+            </div>
+        </div>
+
+        <!-- Campo para la descripción -->
+        <div class="mb-3">
+            <label asp-for="Descripcion" class="form-label">Descripción</label>
+            <textarea asp-for="Descripcion" class="form-control" rows="5" required></textarea>
+            <div class="invalid-feedback">
+                Por favor, ingrese la descripción del artículo.
+            </div>
+        </div>
+
+        <!-- Campo para el precio -->
+        <div class="mb-3">
+            <label asp-for="Precio" class="form-label">Precio</label>
+            <input asp-for="Precio" class="form-control" required type="number" step="0.01" />
+            <div class="invalid-feedback">
+                Por favor, ingrese el precio del artículo.
+            </div>
+        </div>
+
+        <!-- Campo para la foto -->
+        <div class="mb-3">
+            <label class="form-label">Foto</label>
+            <input type="file" name="fotoFile" class="form-control" required />
+            <div class="invalid-feedback">
+                Por favor, suba una foto del artículo.
+            </div>
+            <img id="fotoPreview" src="" alt="Foto" class="img-thumbnail" style="max-width: 150px; display: none;" />
+            <script>
+                document.querySelector('input[name="fotoFile"]').addEventListener('change', function () {
+                    var file = this.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.querySelector('#fotoPreview').src = e.target.result;
+                        document.querySelector('#fotoPreview').style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                });
+            </script>
+        </div>
+
+        <!-- Botón para guardar el menú -->
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Guardar
+        </button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        // Bootstrap validation script
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+}

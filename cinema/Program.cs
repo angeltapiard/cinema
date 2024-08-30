@@ -12,7 +12,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage(); 
+    app.UseDeveloperExceptionPage();
 }
 else
 {
@@ -21,9 +21,10 @@ else
 }
 
 app.UseHttpsRedirection(); 
-app.UseStaticFiles(); 
+app.UseStaticFiles();
 
 app.UseRouting(); 
+
 app.UseAuthorization(); 
 
 app.MapControllerRoute(
