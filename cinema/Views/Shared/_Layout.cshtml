@@ -5,10 +5,13 @@
 
 
 <head>
+
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>@ViewBag.Title - NiceAdmin Bootstrap Template</title>
+    <title>@ViewBag.Title Cinema Infinity</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -16,10 +19,15 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
     <!-- Favicons -->
     <link href="~/assets/img/favicon.png" rel="icon">
     <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -187,12 +195,19 @@
             </li><!-- End Dashboard Nav -->
 
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="@Url.Action("Registrar", "Login")">
+                    <i class="bi bi-basket"></i>
+                    <span>Menú de concesión</span>
+                </a>
+            </li>
+
 
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="@Url.Action("Registrar","Login")">
-                    <i class="bi bi-card-list"></i>
-                    <span>Registro</span>
+                    <i class='bx bxs-collection'></i>
+                    <span>Salas</span>
                 </a>
             </li>
 
@@ -250,6 +265,8 @@
 
     <!-- Template Main JS File -->
     <script src="~/assets/js/main.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

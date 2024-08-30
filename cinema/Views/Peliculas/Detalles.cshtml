@@ -25,7 +25,18 @@
                     <h1 class="card-title">@Model.Nombre</h1>
                     <p class="card-text"><strong>Duración:</strong> @Model.Duracion minutos</p>
                     <p class="card-text"><strong>Clasificación:</strong> @Model.Clasificacion</p>
-                    <p class="card-text"><strong>Descripción:</strong> @Model.Descripcion</p>
+                    <p class="card-text">
+                        <strong>Géneros:</strong>
+                        @if (Model.Generos != null && Model.Generos.Any())
+                        {
+                            @string.Join(", ", Model.Generos)
+                        }
+                        else
+                        {
+                            <span class="text-muted">No especificado</span>
+                        }
+                    </p>
+                    <p class="card-text" style="white-space: pre-wrap;"><strong>Descripción:<br/></strong> @Model.Descripcion</p>
                 </div>
             </div>
         </div>

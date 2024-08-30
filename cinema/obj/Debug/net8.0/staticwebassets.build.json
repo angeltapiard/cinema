@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "VfLe0ONEYSDD3U+mNqvJXibkg00W58s+k7ynjqex+yA=",
+  "Hash": "apcA/s592oolk8Su9zgMLhaMZ51jKgIyeEUBNSqMyb0=",
   "Source": "cinema",
   "BasePath": "_content/cinema",
   "Mode": "Default",
@@ -9534,6 +9534,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\MVC Cinema\\cinema\\wwwroot\\img\\83557.png",
+      "SourceId": "cinema",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\MVC Cinema\\cinema\\wwwroot\\",
+      "BasePath": "_content/cinema",
+      "RelativePath": "img/83557.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\83557.png"
     },
     {
       "Identity": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\MVC Cinema\\cinema\\wwwroot\\img\\logoCINE.png",

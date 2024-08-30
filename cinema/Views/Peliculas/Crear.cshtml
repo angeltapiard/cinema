@@ -3,6 +3,7 @@
 
 @{
     var clasificaciones = Enum.GetValues(typeof(Clasificacion)).Cast<Clasificacion>().ToList();
+    var generosDisponibles = Enum.GetValues(typeof(Genero)).Cast<Genero>().ToList();
 }
 
 <div class="container mt-3">
@@ -49,6 +50,39 @@
                 Por favor, ingrese la descripción de la película.
             </div>
         </div>
+
+        <!-- Campo para seleccionar géneros -->
+        <div class="mb-3">
+            <label class="form-label">Género(s)</label>
+            <div>
+                @foreach (var genero in generosDisponibles)
+                {
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="Generos" value="@genero.ToString()" />
+                        <label class="form-check-label">@genero</label>
+                    </div>
+                }
+            </div>
+            <div class="invalid-feedback">
+                Por favor, seleccione al menos un género.
+            </div>
+
+ @*        <!-- Campo para seleccionar géneros -->
+        <div class="mb-3">
+            <label class="form-label">Géneros</label>
+            <div>
+                @foreach (var genero in generosDisponibles)
+                {
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="Generos" value="@genero.ToString()" />
+                        <label class="form-check-label">@genero</label>
+                    </div>
+                }
+            </div>
+            <div class="invalid-feedback">
+                Por favor, seleccione al menos un género.
+            </div>
+        </div> *@
 
         <!-- Campo para el póster -->
         <div class="mb-3">

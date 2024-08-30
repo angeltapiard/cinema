@@ -25,7 +25,7 @@ namespace Cinema.Controllers
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                string query = "SELECT Id, Nombre, Duracion, Clasificacion, Poster FROM Peliculas";
+                string query = "SELECT Id, Nombre, Duracion, Clasificacion, Genero, Poster FROM Peliculas";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -38,7 +38,8 @@ namespace Cinema.Controllers
                         Nombre = reader.GetString(1),
                         Duracion = reader.GetInt32(2),
                         Clasificacion = reader.IsDBNull(3) ? Clasificacion.G : ParseClasificacion(reader.GetString(3)),
-                        Poster = reader.IsDBNull(4) ? null : (byte[])reader["Poster"]
+                        Generos = reader.IsDBNull(4) ? new List<Genero>() : ParseGeneros(reader.GetString(4)),
+                        Poster = reader.IsDBNull(5) ? null : (byte[])reader["Poster"]
                     };
 
                     peliculas.Add(pelicula);
@@ -58,9 +59,20 @@ namespace Cinema.Controllers
             return Clasificacion.G; // Valor por defecto si falla la conversión
         }
 
+        // Método auxiliar para convertir el string de géneros a una lista de enums Genero
+        private List<Genero> ParseGeneros(string generosStr)
+        {
+            return generosStr.Split(',')
+                .Select(g => Enum.TryParse(g, out Genero genero) ? genero : (Genero?)null)
+                .Where(g => g.HasValue)
+                .Select(g => g.Value)
+                .ToList();
+        }
+
         // Acción para mostrar el formulario de agregar película
         public IActionResult Crear()
         {
+            ViewBag.GenerosDisponibles = Enum.GetValues(typeof(Genero)).Cast<Genero>().ToList();
             return View();
         }
 
@@ -79,11 +91,12 @@ namespace Cinema.Controllers
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                string query = "INSERT INTO Peliculas (Nombre, Duracion, Clasificacion, Descripcion, Poster) VALUES (@Nombre, @Duracion, @Clasificacion, @Descripcion, @Poster)";
+                string query = "INSERT INTO Peliculas (Nombre, Duracion, Clasificacion, Genero, Descripcion, Poster) VALUES (@Nombre, @Duracion, @Clasificacion, @Genero, @Descripcion, @Poster)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Nombre", pelicula.Nombre);
                 cmd.Parameters.AddWithValue("@Duracion", pelicula.Duracion);
                 cmd.Parameters.AddWithValue("@Clasificacion", pelicula.Clasificacion.ToString());
+                cmd.Parameters.AddWithValue("@Genero", string.Join(",", pelicula.Generos.Select(g => g.ToString())));
                 cmd.Parameters.AddWithValue("@Descripcion", pelicula.Descripcion ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@Poster", pelicula.Poster ?? (object)DBNull.Value);
 
@@ -101,7 +114,7 @@ namespace Cinema.Controllers
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                string query = "SELECT Id, Nombre, Duracion, Clasificacion, Descripcion, Poster FROM Peliculas WHERE Id = @Id";
+                string query = "SELECT Id, Nombre, Duracion, Clasificacion, Genero, Descripcion, Poster FROM Peliculas WHERE Id = @Id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Id", id);
                 conn.Open();
@@ -115,8 +128,9 @@ namespace Cinema.Controllers
                         Nombre = reader.GetString(1),
                         Duracion = reader.GetInt32(2),
                         Clasificacion = reader.IsDBNull(3) ? Clasificacion.G : ParseClasificacion(reader.GetString(3)),
-                        Descripcion = reader.IsDBNull(4) ? null : reader.GetString(4),
-                        Poster = reader.IsDBNull(5) ? null : (byte[])reader["Poster"]
+                        Generos = reader.IsDBNull(4) ? new List<Genero>() : ParseGeneros(reader.GetString(4)),
+                        Descripcion = reader.IsDBNull(5) ? null : reader.GetString(5),
+                        Poster = reader.IsDBNull(6) ? null : (byte[])reader["Poster"]
                     };
                 }
             }
@@ -136,7 +150,7 @@ namespace Cinema.Controllers
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                string query = "SELECT Id, Nombre, Duracion, Clasificacion, Descripcion, Poster FROM Peliculas WHERE Id = @Id";
+                string query = "SELECT Id, Nombre, Duracion, Clasificacion, Genero, Descripcion, Poster FROM Peliculas WHERE Id = @Id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Id", id);
                 conn.Open();
@@ -150,8 +164,9 @@ namespace Cinema.Controllers
                         Nombre = reader.GetString(1),
                         Duracion = reader.GetInt32(2),
                         Clasificacion = reader.IsDBNull(3) ? Clasificacion.G : ParseClasificacion(reader.GetString(3)),
-                        Descripcion = reader.IsDBNull(4) ? null : reader.GetString(4),
-                        Poster = reader.IsDBNull(5) ? null : (byte[])reader["Poster"]
+                        Generos = reader.IsDBNull(4) ? new List<Genero>() : ParseGeneros(reader.GetString(4)),
+                        Descripcion = reader.IsDBNull(5) ? null : reader.GetString(5),
+                        Poster = reader.IsDBNull(6) ? null : (byte[])reader["Poster"]
                     };
                 }
             }
@@ -161,6 +176,7 @@ namespace Cinema.Controllers
                 return NotFound();
             }
 
+            ViewBag.GenerosDisponibles = Enum.GetValues(typeof(Genero)).Cast<Genero>().ToList();
             return View(pelicula);
         }
 
@@ -193,12 +209,13 @@ namespace Cinema.Controllers
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                string query = "UPDATE Peliculas SET Nombre = @Nombre, Duracion = @Duracion, Clasificacion = @Clasificacion, Descripcion = @Descripcion, Poster = @Poster WHERE Id = @Id";
+                string query = "UPDATE Peliculas SET Nombre = @Nombre, Duracion = @Duracion, Clasificacion = @Clasificacion, Genero = @Genero, Descripcion = @Descripcion, Poster = @Poster WHERE Id = @Id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Id", pelicula.Id);
                 cmd.Parameters.AddWithValue("@Nombre", pelicula.Nombre);
                 cmd.Parameters.AddWithValue("@Duracion", pelicula.Duracion);
                 cmd.Parameters.AddWithValue("@Clasificacion", pelicula.Clasificacion.ToString());
+                cmd.Parameters.AddWithValue("@Genero", string.Join(",", pelicula.Generos.Select(g => g.ToString())));
                 cmd.Parameters.AddWithValue("@Descripcion", pelicula.Descripcion ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@Poster", pelicula.Poster ?? (object)DBNull.Value);
 

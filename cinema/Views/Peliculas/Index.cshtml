@@ -7,49 +7,63 @@
         <i class="bi bi-plus-circle me-2"></i> Añadir Película
     </a>
 
-    <div class="list-group">
+    <div class="row">
         @foreach (var pelicula in Model)
         {
-            <div class="list-group-item">
-                <div class="row">
-                    <!-- Póster de la película -->
-                    <div class="col-md-3">
-                        @if (pelicula.Poster != null && pelicula.Poster.Length > 0)
-                        {
-                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(pelicula.Poster)" alt="Póster de @pelicula.Nombre" class="img-fluid rounded" style="max-width: 150px;" />
-                        }
-                        else
-                        {
-                            <div class="d-flex justify-content-center align-items-center h-100 bg-light" style="max-width: 150px;">
-                                <p class="text-muted">No hay póster disponible.</p>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="row g-0 h-100">
+                        <!-- Póster de la película -->
+                        <div class="col-md-4 d-flex justify-content-center align-items-center">
+                            <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+                                @if (pelicula.Poster != null && pelicula.Poster.Length > 0)
+                                {
+                                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(pelicula.Poster)" alt="Póster de @pelicula.Nombre" class="img-fluid rounded-start" style="max-width: 100%; max-height: 100%;" />
+                                }
+                                else
+                                {
+                                    <div class="d-flex justify-content-center align-items-center bg-light w-100" style="height: 200px;">
+                                        <p class="text-muted text-center">No hay póster disponible.</p>
+                                    </div>
+                                }
                             </div>
-                        }
-                    </div>
+                        </div>
 
-                    <!-- Detalles de la película -->
-                    <div class="col-md-9">
-                        <h4>@pelicula.Nombre</h4>
-                        <p><strong>Duración:</strong> @pelicula.Duracion minutos</p>
-                        <p><strong>Clasificación:</strong> @pelicula.Clasificacion</p>
+                        <!-- Detalles de la película -->
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h4 class="card-title">@pelicula.Nombre</h4>
+                                <p class="card-text"><strong>Duración:</strong> @pelicula.Duracion minutos</p>
+                                <p class="card-text"><strong>Clasificación:</strong> @pelicula.Clasificacion</p>
+                                <p class="card-text">
+                                    <strong>Género(s):</strong>
+                                    @if (pelicula.Generos != null && pelicula.Generos.Any())
+                                    {
+                                        @string.Join(", ", pelicula.Generos)
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No especificado</span>
+                                    }
+                                </p>
 
-                        <!-- Botones de acción -->
-                        <div class="mt-3">
-                            <!-- Botón para ver detalles -->
-                            <a asp-action="Detalles" asp-route-id="@pelicula.Id" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Detalles">
-                                <i class="bi bi-info-circle"></i> 
-                            </a>
+                                <!-- Botones de acción -->
+                                <div class="mt-3">
+                                    <a asp-action="Detalles" asp-route-id="@pelicula.Id" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Detalles">
+                                        <i class="bi bi-info-circle"></i>
+                                    </a>
 
-                            <!-- Botón para editar -->
-                            <a asp-action="Editar" asp-route-id="@pelicula.Id" class="btn btn-warning text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
+                                    <a asp-action="Editar" asp-route-id="@pelicula.Id" class="btn btn-warning text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
 
-                            <!-- Botón para eliminar -->
-                            <form asp-action="Eliminar" asp-route-id="@pelicula.Id" method="post" class="d-inline" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta película?');">
-                                <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+                                    <form asp-action="Eliminar" asp-route-id="@pelicula.Id" method="post" class="d-inline" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta película?');">
+                                        <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
