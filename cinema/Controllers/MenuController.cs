@@ -25,7 +25,7 @@ namespace Cinema.Controllers
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                string query = "SELECT Id, Articulo, Descripcion, Precio, Foto FROM Menu";
+                string query = "SELECT Id, Articulo, Descripcion, Precio, Foto, Categoria FROM Menu";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -38,7 +38,8 @@ namespace Cinema.Controllers
                         Articulo = reader.GetString(1),
                         Descripcion = reader.IsDBNull(2) ? null : reader.GetString(2),
                         Precio = reader.GetDecimal(3),
-                        Foto = reader.IsDBNull(4) ? null : (byte[])reader["Foto"]
+                        Foto = reader.IsDBNull(4) ? null : (byte[])reader["Foto"],
+                        Categoria = Enum.TryParse(reader.GetString(5), out Categoria categoria) ? categoria : Categoria.Otros
                     };
 
                     menus.Add(menu);
@@ -51,6 +52,9 @@ namespace Cinema.Controllers
         // Acción para mostrar el formulario de agregar artículo al menú
         public IActionResult Crear()
         {
+            // Obtener las categorías disponibles
+            var categorias = Enum.GetValues(typeof(Categoria)).Cast<Categoria>().ToList();
+            ViewBag.Categorias = categorias;
             return View();
         }
 
@@ -69,12 +73,13 @@ namespace Cinema.Controllers
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                string query = "INSERT INTO Menu (Articulo, Descripcion, Precio, Foto) VALUES (@Articulo, @Descripcion, @Precio, @Foto)";
+                string query = "INSERT INTO Menu (Articulo, Descripcion, Precio, Foto, Categoria) VALUES (@Articulo, @Descripcion, @Precio, @Foto, @Categoria)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Articulo", menu.Articulo);
                 cmd.Parameters.AddWithValue("@Descripcion", menu.Descripcion ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@Precio", menu.Precio);
                 cmd.Parameters.AddWithValue("@Foto", menu.Foto ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@Categoria", menu.Categoria.ToString()); // Convertir Categoria a string
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
@@ -90,7 +95,7 @@ namespace Cinema.Controllers
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                string query = "SELECT Id, Articulo, Descripcion, Precio, Foto FROM Menu WHERE Id = @Id";
+                string query = "SELECT Id, Articulo, Descripcion, Precio, Foto, Categoria FROM Menu WHERE Id = @Id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Id", id);
                 conn.Open();
@@ -104,7 +109,8 @@ namespace Cinema.Controllers
                         Articulo = reader.GetString(1),
                         Descripcion = reader.IsDBNull(2) ? null : reader.GetString(2),
                         Precio = reader.GetDecimal(3),
-                        Foto = reader.IsDBNull(4) ? null : (byte[])reader["Foto"]
+                        Foto = reader.IsDBNull(4) ? null : (byte[])reader["Foto"],
+                        Categoria = Enum.TryParse(reader.GetString(5), out Categoria categoria) ? categoria : Categoria.Otros
                     };
                 }
             }
@@ -124,7 +130,7 @@ namespace Cinema.Controllers
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                string query = "SELECT Id, Articulo, Descripcion, Precio, Foto FROM Menu WHERE Id = @Id";
+                string query = "SELECT Id, Articulo, Descripcion, Precio, Foto, Categoria FROM Menu WHERE Id = @Id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Id", id);
                 conn.Open();
@@ -138,7 +144,8 @@ namespace Cinema.Controllers
                         Articulo = reader.GetString(1),
                         Descripcion = reader.IsDBNull(2) ? null : reader.GetString(2),
                         Precio = reader.GetDecimal(3),
-                        Foto = reader.IsDBNull(4) ? null : (byte[])reader["Foto"]
+                        Foto = reader.IsDBNull(4) ? null : (byte[])reader["Foto"],
+                        Categoria = Enum.TryParse(reader.GetString(5), out Categoria categoria) ? categoria : Categoria.Otros
                     };
                 }
             }
@@ -148,6 +155,9 @@ namespace Cinema.Controllers
                 return NotFound();
             }
 
+            // Obtener las categorías disponibles
+            var categorias = Enum.GetValues(typeof(Categoria)).Cast<Categoria>().ToList();
+            ViewBag.Categorias = categorias;
             return View(menu);
         }
 
@@ -180,13 +190,14 @@ namespace Cinema.Controllers
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                string query = "UPDATE Menu SET Articulo = @Articulo, Descripcion = @Descripcion, Precio = @Precio, Foto = @Foto WHERE Id = @Id";
+                string query = "UPDATE Menu SET Articulo = @Articulo, Descripcion = @Descripcion, Precio = @Precio, Foto = @Foto, Categoria = @Categoria WHERE Id = @Id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Id", menu.Id);
                 cmd.Parameters.AddWithValue("@Articulo", menu.Articulo);
                 cmd.Parameters.AddWithValue("@Descripcion", menu.Descripcion ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@Precio", menu.Precio);
                 cmd.Parameters.AddWithValue("@Foto", menu.Foto ?? (object)DBNull.Value);
+                cmd.Parameters.AddWithValue("@Categoria", menu.Categoria.ToString()); // Convertir Categoria a string
 
                 conn.Open();
                 cmd.ExecuteNonQuery();

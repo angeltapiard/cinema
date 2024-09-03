@@ -1,63 +1,79 @@
 ﻿@model IEnumerable<Cinema.Models.Menu>
 
-<div class="container mt-4">
+@{
+    var categorias = Model.Select(a => a.Categoria).Distinct().ToList();
+}
 
+<style>
+    .text-price {
+        font-size: 1.25rem; /* Ajusta el tamaño según lo necesario */
+    }
+</style>
+
+<div class="container mt-4">
     <h3>Menú de concesión</h3>
     <a asp-action="Crear" class="btn btn-primary mb-3 btn-lg px-4">
         <i class="bi bi-plus-circle me-2"></i> Añadir Artículo
     </a>
 
-    <div class="row">
-        @foreach (var articulo in Model)
-        {
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="row g-0 h-100">
-                        <!-- Foto del artículo -->
-                        <div class="col-md-4 d-flex justify-content-center align-items-center">
-                            <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
-                                @if (articulo.Foto != null && articulo.Foto.Length > 0)
-                                {
-                                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(articulo.Foto)" alt="Foto de @articulo.Articulo" class="img-fluid rounded-start" style="max-width: 100%; max-height: 100%;" />
-                                }
-                                else
-                                {
-                                    <div class="d-flex justify-content-center align-items-center bg-light w-100" style="height: 200px;">
-                                        <p class="text-muted text-center">No hay foto disponible.</p>
+    <!-- Agrupar artículos por categoría -->
+    @foreach (var categoriaGrupo in Model.GroupBy(a => a.Categoria))
+    {
+        <div class="category-section mb-5">
+            <h4 class="mb-3">@categoriaGrupo.Key</h4>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                @foreach (var articulo in categoriaGrupo)
+                {
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="row g-0 h-100">
+                                <!-- Foto del artículo -->
+                                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                                    @if (articulo.Foto != null && articulo.Foto.Length > 0)
+                                    {
+                                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(articulo.Foto)" alt="Foto de @articulo.Articulo" class="img-fluid rounded-start" style="max-width: 100%; max-height: 120px;" />
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex justify-content-center align-items-center bg-light w-100" style="height: 120px;">
+                                            <p class="text-muted text-center">No hay foto disponible.</p>
+                                        </div>
+                                    }
+                                </div>
+
+                                <!-- Detalles del artículo -->
+                                <div class="col-md-8 d-flex flex-column">
+                                    <div class="card-body d-flex flex-column justify-content-between">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <h5 class="card-title mb-1">@articulo.Articulo</h5>
+                                                <p class="card-text mb-0">@articulo.Descripcion</p>
+                                            </div>
+                                            <div class="text-end">
+                                                <p class="mb-0"><strong>Precio:</strong></p>
+                                                <p class="mb-1 text-price fw-bold text-primary">$@articulo.Precio</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                }
-                            </div>
-                        </div>
-
-                        <!-- Detalles del artículo -->
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h4 class="card-title">@articulo.Articulo</h4>
-                                <p class="card-text"><strong>Precio:</strong> $@articulo.Precio</p>
-                                <p class="card-text">
-                                    <strong>Descripción:</strong> @articulo.Descripcion
-                                </p>
-
-                                <!-- Botones de acción -->
-                                <div class="mt-3">
-                                
-                                    <a asp-action="Editar" asp-route-id="@articulo.Id" class="btn btn-warning text-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-
-                                    <form asp-action="Eliminar" asp-route-id="@articulo.Id" method="post" class="d-inline" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este artículo?');">
-                                        <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
+                                    <!-- Botones de acción -->
+                                    <div class="card-footer d-flex justify-content-end align-items-center">
+                                        <a asp-action="Editar" asp-route-id="@articulo.Id" class="btn btn-warning text-white me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <form asp-action="Eliminar" asp-route-id="@articulo.Id" method="post" class="d-inline" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este artículo?');">
+                                            <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>
 
 @section Scripts {

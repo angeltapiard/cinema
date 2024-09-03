@@ -1,9 +1,28 @@
 ﻿@model Cinema.Models.Menu
 @using Cinema.Models
 
+@{
+    var categorias = Enum.GetValues(typeof(Categoria)).Cast<Categoria>().ToList();
+}
+
 <div class="container mt-3">
     <h3 class="mb-4">Crear Menú</h3>
     <form asp-action="Crear" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <!-- Campo para la categoría -->
+        <div class="mb-3">
+            <label asp-for="Categoria" class="form-label">Categoría</label>
+            <select asp-for="Categoria" class="form-select" required>
+                <option value="">Seleccione una categoría</option>
+                @foreach (var categoria in categorias)
+                {
+                    <option value="@categoria.ToString()">@categoria</option>
+                }
+            </select>
+            <div class="invalid-feedback">
+                Por favor, seleccione una categoría.
+            </div>
+        </div>
+
         <!-- Campo para el artículo -->
         <div class="mb-3">
             <label asp-for="Articulo" class="form-label">Artículo</label>
