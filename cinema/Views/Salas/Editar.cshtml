@@ -1,0 +1,60 @@
+﻿@model Cinema.Models.Sala
+
+<div class="container mt-3">
+    <h3 class="mb-4">Editar Sala</h3>
+    <form asp-action="Editar" method="post" class="needs-validation" novalidate>
+        <input type="hidden" asp-for="Id" />
+
+        <!-- Campo para el nombre -->
+        <div class="mb-3">
+            <label asp-for="Nombre" class="form-label">Nombre</label>
+            <input asp-for="Nombre" class="form-control" required />
+            <div class="invalid-feedback">
+                Por favor, ingrese el nombre de la sala.
+            </div>
+        </div>
+
+        <!-- Campo para el tipo de sala -->
+        <div class="mb-3">
+            <label asp-for="TipoSala" class="form-label">Tipo de Sala</label>
+            <input asp-for="TipoSala" class="form-control" required />
+            <div class="invalid-feedback">
+                Por favor, ingrese el tipo de sala.
+            </div>
+        </div>
+
+        <!-- Campo para el precio -->
+        <div class="mb-3">
+            <label asp-for="Precio" class="form-label">Precio</label>
+            <input asp-for="Precio" class="form-control" required />
+            <div class="invalid-feedback">
+                Por favor, ingrese el precio de la sala.
+            </div>
+        </div>
+
+        <!-- Botón para guardar los cambios -->
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Guardar
+        </button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        // Bootstrap validation script
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+}

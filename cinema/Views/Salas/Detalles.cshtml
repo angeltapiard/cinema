@@ -1,0 +1,31 @@
+﻿@model Cinema.Models.Sala
+
+<h3>Detalles de @Model.Nombre</h3>
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="row g-0">
+            <!-- Columna para el póster (si aplica) -->
+            <div class="col-md-4">
+                <div class="d-flex justify-content-center align-items-center h-100 bg-light">
+                    <p class="text-muted">No hay imagen disponible.</p>
+                </div>
+            </div>
+
+            <!-- Columna para los detalles -->
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h1 class="card-title">@Model.Nombre</h1>
+                    <p class="card-text"><strong>Tipo de Sala:</strong> @Model.TipoSala</p>
+                    <p class="card-text"><strong>Precio:</strong> @Model.Precio.ToString("C")</p>
+                </div>
+            </div>
+        </div>
+        <!-- Botón para volver a la lista -->
+        <div class="card-footer text-end">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle me-2"></i>Volver a la lista
+            </a>
+        </div>
+    </div>
+</div>

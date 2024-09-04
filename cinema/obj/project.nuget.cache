@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qd1/Vs4UgQY=",
+  "dgSpecHash": "Be1KgYoZ/n4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA2\\cinema\\cinema.csproj",
+  "projectFilePath": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\cinema.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\azure.identity\\1.11.3\\azure.identity.1.11.3.nupkg.sha512",
