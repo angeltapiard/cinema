@@ -1,0 +1,105 @@
+﻿@model List<Cinema.Models.Asiento>
+
+
+@{
+    Layout = null; // Si estás usando un layout, puedes ajustarlo aquí
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sala de Cine</title>
+
+    <!-- Incluimos Bootstrap y otros estilos -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+
+    <!-- Estilos personalizados -->
+    <style>
+        body {
+            padding-top: 50px;
+            padding-bottom: 20px;
+            background-color: #F4F9FF; /* Fondo claro para toda la página */
+        }
+
+        .seat {
+            font-size: 1.5rem;
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            display: inline-block;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .available {
+            color: green;
+        }
+
+        .occupied {
+            color: red;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap; /* Asegura que los asientos no se envuelvan a una nueva línea */
+        }
+
+        .screen-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .screen {
+            background-color: gray;
+            width: 80%;
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 10px;
+            color: #fff;
+        }
+
+        .seating-area {
+            margin: 0 auto;
+            width: fit-content;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- Área de asientos -->
+        <div class="seating-area">
+            @foreach (var fila in Model.Select(a => a.Fila).Distinct())
+            {
+                <div class="row">
+                    @foreach (var asiento in Model.Where(a => a.Fila == fila))
+                    {
+                        <form asp-action="Seleccionar" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@asiento.Id" />
+                            <i class="bi bi-file-person seat @(asiento.Ocupado ? "occupied" : "available")" onclick="this.closest('form').submit();"></i>
+                        </form>
+                    }
+                </div>
+            }
+        </div>
+
+        <!-- Pantalla de cine -->
+        <div class="screen-container">
+            <img src="@Url.Content("~/img/SCREEM.png")" alt="Pantalla" width="335" height="49">
+        </div>
+
+    </div>
+
+    <!-- Scripts de Bootstrap y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

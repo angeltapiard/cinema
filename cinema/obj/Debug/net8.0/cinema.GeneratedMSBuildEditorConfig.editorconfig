@@ -26,6 +26,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\Users\user\OneDrive - Universidad Autonoma de Santo Domingo\Escritorio\CINEMA\cinema
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/user/OneDrive - Universidad Autonoma de Santo Domingo/Escritorio/CINEMA/cinema/Views/Asiento/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNpZW50b1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/user/OneDrive - Universidad Autonoma de Santo Domingo/Escritorio/CINEMA/cinema/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

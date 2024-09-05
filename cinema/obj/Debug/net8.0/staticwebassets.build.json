@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "SEFfqUNuXFOjhK+rnD2MFwSoDz8sVVh/L0l8Q4WGURg=",
+  "Hash": "lk2a1N4lzshy5OpyqB4gCSs126vzBbtWu+OETJ8eVpk=",
   "Source": "cinema",
   "BasePath": "_content/cinema",
   "Mode": "Default",
@@ -9591,6 +9591,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\logoCINE2.png"
+    },
+    {
+      "Identity": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\img\\SCREEM.png",
+      "SourceId": "cinema",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\",
+      "BasePath": "_content/cinema",
+      "RelativePath": "img/SCREEM.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\SCREEM.png"
     },
     {
       "Identity": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\js\\site.js",
