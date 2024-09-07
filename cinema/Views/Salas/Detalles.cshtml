@@ -1,25 +1,195 @@
-﻿@model Cinema.Models.Sala
+﻿@model Cinema.Models.DetallesViewModel
 
-<h3>Detalles de @Model.Nombre</h3>
+@{
+    Layout = null; // Ajusta esto si estás usando un layout
+}
 
-<div class="container mt-5">
-    <div class="card">
-        <div class="row g-0">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Sala.Nombre - Detalles</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+            padding-bottom: 20px;
+            background-color: #F4F9FF;
+        }
 
-            <!-- Columna para los detalles -->
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h1 class="card-title">@Model.Nombre</h1>
-                    <p class="card-text"><strong>Tipo de Sala:</strong> @Model.TipoSala</p>
-                    <p class="card-text"><strong>Precio:</strong> @Model.Precio.ToString("C")</p>
+        .seat {
+            font-size: 1.5rem;
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            display: inline-block;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+
+        .screen-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .screen {
+            background-color: gray;
+            width: 80%;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 10px;
+            color: #fff;
+        }
+
+        .seating-area {
+            margin: 0 auto;
+            width: fit-content;
+            position: relative;
+        }
+
+        .legend-container {
+            position: absolute;
+            left: -180px; /* Ajusta el valor según el espacio necesario */
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 10px;
+            background-color: #F4F9FF; /* Opcional, para un fondo más visible */
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .legend-icon {
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            margin-right: 10px;
+            border-radius: 5px;
+            line-height: 30px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .legend-available {
+            background-color: green;
+        }
+
+        .legend-occupied {
+            background-color: red;
+        }
+
+        .legend-selected {
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3 class="mb-4">Asientos @Model.Sala.Nombre</h3>
+
+        <div class="row">
+            <!-- Panel de información de asientos -->
+            <div class="col-md-3 info-panel">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="description" style="padding: 10px; border-radius: 5px; color: white; background-color: green; font-weight: bold;">Disponible</div>
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                    <div class="description" style="padding: 10px; border-radius: 5px; color: white; background-color: red; font-weight: bold;">Ocupado</div>
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                    <div class="description" style="padding: 10px; border-radius: 5px; color: white; background-color: blue; font-weight: bold;">Seleccionado</div>
                 </div>
             </div>
+
+            <!-- Área de asientos -->
+            <div class="col-md-9 seating-area">
+                <div class="screen-container">
+                    <img src="@Url.Content("~/img/pantalla2.png")" alt="Pantalla" width="635" height="5" class="img-fluid">
+                </div>
+
+                @foreach (var fila in Model.Asientos.Select(a => a.Fila).Distinct())
+                {
+                    <div class="row">
+                        @foreach (var asiento in Model.Asientos.Where(a => a.Fila == fila))
+                        {
+                            <!-- Usamos diferentes imágenes solo para ocupado o disponible -->
+                            <img src="@Url.Content(asiento.Ocupado ? "~/img/red.png" : "~/img/green.png")"
+                                 alt="Asiento"
+                                 class="seat"
+                                 data-id="@asiento.Id"
+                                 onclick="selectSeat(this);"
+                                 width="30"
+                                 height="30" />
+                        }
+                    </div>
+                }
+            </div>
         </div>
+
         <!-- Botón para volver a la lista -->
-        <div class="card-footer text-end">
+        <div class="text-end">
             <a asp-action="Index" class="btn btn-secondary">
-                <i class="bi bi-arrow-left-circle me-2"></i>Volver a la lista
+                <i class="bi bi-arrow-left-circle me-2"></i>  Volver
             </a>
         </div>
     </div>
-</div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function selectSeat(element) {
+            var id = $(element).data('id');
+            var isOccupied = $(element).hasClass('occupied');
+            var isSelected = $(element).hasClass('selected');
+
+            if (isOccupied) {
+                alert('Este asiento ya está ocupado.');
+                return;
+            }
+
+            // Alternar el estado de selección
+            $(element).toggleClass('selected', !isSelected);
+
+            // Enviar solicitud AJAX para cambiar el estado del asiento
+            $.ajax({
+                url: '@Url.Action("SeleccionarAsiento", "Salas")',
+                type: 'POST',
+                data: { id: id },
+                success: function (response) {
+                    if (response.success) {
+                        // La solicitud fue exitosa, puedes hacer algo aquí si es necesario
+                    } else {
+                        alert('Error al seleccionar el asiento.');
+                    }
+                },
+                error: function () {
+                    alert('Error al seleccionar el asiento.');
+                }
+            });
+
+            // Actualizar la imagen según el nuevo estado del asiento
+            if (!isSelected) {
+                $(element).attr('src', '@Url.Content("~/img/blue.png")'); // Cambia a la imagen de asiento seleccionado
+            } else {
+                $(element).attr('src', '@Url.Content("~/img/green.png")'); // Cambia a la imagen de asiento disponible
+            }
+        }
+    </script>
+</body>
+</html>

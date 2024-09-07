@@ -18,5 +18,9 @@ namespace Cinema.Models
         [Required]
         public bool Ocupado { get; set; }
 
+        [ForeignKey("Sala")]
+        public int SalaId { get; set; }
+
+        public Sala Sala { get; set; } // Relación con Sala
     }
 }

@@ -2009,12 +2009,44 @@
       "PackagePath": "staticwebassets\\img\\SCREEM.png"
     },
     {
+      "Id": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\img\\blue.png",
+      "PackagePath": "staticwebassets\\img\\blue.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\img\\coche.png",
+      "PackagePath": "staticwebassets\\img\\coche.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\img\\green.png",
+      "PackagePath": "staticwebassets\\img\\green.png"
+    },
+    {
       "Id": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\img\\logoCINE.png",
       "PackagePath": "staticwebassets\\img\\logoCINE.png"
     },
     {
       "Id": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\img\\logoCINE2.png",
       "PackagePath": "staticwebassets\\img\\logoCINE2.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\img\\pantalla.png",
+      "PackagePath": "staticwebassets\\img\\pantalla.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\img\\pantalla2.png",
+      "PackagePath": "staticwebassets\\img\\pantalla2.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\img\\red.png",
+      "PackagePath": "staticwebassets\\img\\red.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\img\\scre - copia.png",
+      "PackagePath": "staticwebassets\\img\\scre - copia.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\img\\screx.png",
+      "PackagePath": "staticwebassets\\img\\screx.png"
     },
     {
       "Id": "C:\\Users\\user\\OneDrive - Universidad Autonoma de Santo Domingo\\Escritorio\\CINEMA\\cinema\\wwwroot\\js\\site.js",

@@ -1,8 +1,7 @@
-﻿@model List<Cinema.Models.Asiento>
-
+﻿@model Cinema.Models.DetallesViewModel
 
 @{
-    Layout = null; // Si estás usando un layout, puedes ajustarlo aquí
+    Layout = null; // Ajusta esto si estás usando un layout
 }
 
 <!DOCTYPE html>
@@ -10,18 +9,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sala de Cine</title>
-
-    <!-- Incluimos Bootstrap y otros estilos -->
+    <title>@Model.Sala.Nombre - Detalles</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-
-    <!-- Estilos personalizados -->
     <style>
         body {
             padding-top: 50px;
             padding-bottom: 20px;
-            background-color: #F4F9FF; /* Fondo claro para toda la página */
+            background-color: #F4F9FF;
         }
 
         .seat {
@@ -42,10 +37,14 @@
             color: red;
         }
 
+        .selected {
+            color: blue; /* Color para el asiento seleccionado */
+        }
+
         .row {
             display: flex;
             justify-content: center;
-            flex-wrap: nowrap; /* Asegura que los asientos no se envuelvan a una nueva línea */
+            flex-wrap: nowrap;
         }
 
         .screen-container {
@@ -74,32 +73,56 @@
 </head>
 <body>
     <div class="container">
-        
-        <!-- Área de asientos -->
+        <h1>Detalles de la Sala: @Model.Sala.Nombre</h1>
         <div class="seating-area">
-            @foreach (var fila in Model.Select(a => a.Fila).Distinct())
+            @foreach (var fila in Model.Asientos.Select(a => a.Fila).Distinct())
             {
                 <div class="row">
-                    @foreach (var asiento in Model.Where(a => a.Fila == fila))
+                    @foreach (var asiento in Model.Asientos.Where(a => a.Fila == fila))
                     {
-                        <form asp-action="Seleccionar" method="post" style="display:inline;">
-                            <input type="hidden" name="id" value="@asiento.Id" />
-                            <i class="bi bi-file-person seat @(asiento.Ocupado ? "occupied" : "available")" onclick="this.closest('form').submit();"></i>
-                        </form>
+                        <i class="bi bi-file-person seat @(asiento.Ocupado ? "occupied" : "available")"
+                           data-id="@asiento.Id"
+                           onclick="selectSeat(this, @asiento.Ocupado);"></i>
                     }
                 </div>
             }
         </div>
-
-        <!-- Pantalla de cine -->
         <div class="screen-container">
             <img src="@Url.Content("~/img/SCREEM.png")" alt="Pantalla" width="335" height="49">
         </div>
-
+        <a href="@Url.Action("Index")" class="btn btn-primary">Volver</a>
     </div>
 
-    <!-- Scripts de Bootstrap y dependencias -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function selectSeat(element, isOccupied) {
+            if (isOccupied) {
+                alert('Este asiento ya está ocupado.');
+                return;
+            }
+
+            // Marcar el asiento como seleccionado
+            var id = $(element).data('id');
+            var isSelected = $(element).hasClass('selected');
+            $(element).toggleClass('selected', !isSelected);
+
+            // Aquí puedes agregar la lógica para manejar la selección, por ejemplo, enviar una solicitud AJAX
+            // Si deseas hacer una solicitud al servidor para procesar la selección:
+            /*
+            $.ajax({
+                url: '@Url.Action("Seleccionar", "Salas")',
+                type: 'POST',
+                data: { id: id },
+                success: function(response) {
+                    // Manejar la respuesta del servidor
+                },
+                error: function() {
+                    alert('Error al seleccionar el asiento.');
+                }
+            });
+            */
+        }
+    </script>
 </body>
 </html>
